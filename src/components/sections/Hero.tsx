@@ -82,10 +82,11 @@ export default function Hero() {
                     >
                     BEAT
                     <ContainerTextFlip
-                        words={["ATS", "REJECTIONS", "SCREENING", "COMPETITION", "MEDIOCRITY"]}
-                        interval={2500}
-                        animationDuration={600}
-                        textClassName="text-[#e8823a]"
+                    words={["ATS", "REJECTIONS", "SCREENING", "COMPETITION", "MEDIOCRITY"]}
+                    interval={2500}
+                    animationDuration={600}
+                    textClassName="text-white"
+                    className="!text-[clamp(32px,2.5vw,64px)] !font-extrabold !leading-none !tracking-[-0.03em] !pt-1 !pb-2"
                     />
                     </h1>
                     <h2

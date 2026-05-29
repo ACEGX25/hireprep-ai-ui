@@ -37,13 +37,14 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto !important;
 }
 
 body {
   background-color: var(--bg-primary);
   color: var(--text-cream);
   font-family: var(--font-sans);
+  overscroll-behavior: none;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -53,4 +54,20 @@ body {
 
 .font-mono {
   font-family: var(--font-mono);
+}
+
+@keyframes spotlight {
+  0% {
+    opacity: 0;
+    transform: translate(-72%, -62%) scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -40%) scale(1);
+  }
+}
+
+/* Remove or replace the old .animate-spotlight rule */
+.in-view .animate-spotlight {
+  animation: spotlight 2s ease 0.3s forwards;
 }

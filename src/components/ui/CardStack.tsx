@@ -71,8 +71,11 @@ export default function CardStack({ cards }: CardStackProps) {
     applyOffsets(items);
 
     return () => {
-      rootsRef.current.forEach((root) => root.unmount());
-      rootsRef.current.clear();
+      const roots = rootsRef.current;
+      setTimeout(() => {
+        roots.forEach((root) => root.unmount());
+        roots.clear();
+      }, 0);
     };
   }, []);
 

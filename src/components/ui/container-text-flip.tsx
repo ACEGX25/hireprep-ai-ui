@@ -53,21 +53,21 @@ export function ContainerTextFlip({
     return () => clearInterval(intervalId);
   }, [words, interval]);
 
-  return (
-    <motion.p
+return (
+    <motion.span
       layout
       layoutId={`words-here-${id}`}
       animate={{ width }}
       transition={{ duration: animationDuration / 2000 }}
       className={cn(
-  "relative inline-block rounded-lg pt-2 pb-3 text-center text-4xl font-bold",
-  "bg-[#1a0a04] text-[#e8823a]",
-  "shadow-[inset_0_-1px_#3a1a08,inset_0_0_0_1px_#3a1a08,_0_4px_8px_#00000052]",
-  className,
-)}
+        "relative inline-block rounded-lg pt-2 pb-3 text-center text-4xl font-bold",
+        "bg-black text-white",
+        "shadow-[inset_0_-1px_#333,inset_0_0_0_1px_#333,_0_4px_8px_#00000080]",
+        className,
+      )}
       key={words[currentWordIndex]}
     >
-      <motion.div
+      <motion.span
         transition={{
           duration: animationDuration / 1000,
           ease: "easeInOut",
@@ -76,7 +76,7 @@ export function ContainerTextFlip({
         ref={textRef}
         layoutId={`word-div-${words[currentWordIndex]}-${id}`}
       >
-        <motion.div className="inline-block">
+        <motion.span className="inline-block">
           {words[currentWordIndex].split("").map((letter, index) => (
             <motion.span
               key={index}
@@ -95,8 +95,8 @@ export function ContainerTextFlip({
               {letter}
             </motion.span>
           ))}
-        </motion.div>
-      </motion.div>
-    </motion.p>
+        </motion.span>
+      </motion.span>
+    </motion.span>
   );
 }

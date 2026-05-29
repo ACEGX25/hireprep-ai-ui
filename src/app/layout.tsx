@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Outfit, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
+import SmoothScroller from "@/components/providers/SmoothScroller";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -26,7 +27,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${outfit.variable} ${ibmPlexMono.variable}`}>
+        <SmoothScroller>
         {children}
+        </SmoothScroller>
       </body>
     </html>
   );
