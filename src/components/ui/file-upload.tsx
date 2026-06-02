@@ -28,8 +28,10 @@ const secondaryVariant = {
 
 export const FileUpload = ({
   onChange,
+  accept,
 }: {
   onChange?: (files: File[]) => void;
+  accept?: string;
 }) => {
   const [files, setFiles] = useState<File[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -47,6 +49,7 @@ export const FileUpload = ({
     multiple: false,
     noClick: true,
     onDrop: handleFileChange,
+    accept: accept ? { [accept]: [] } : undefined,
     onDropRejected: (error) => {
       console.log(error);
     },
@@ -63,6 +66,7 @@ export const FileUpload = ({
           ref={fileInputRef}
           id="file-upload-handle"
           type="file"
+          accept={accept}
           onChange={(e) => handleFileChange(Array.from(e.target.files || []))}
           className="hidden"
         />

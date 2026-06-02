@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "motion/react";
 import { FileUpload } from "@/components/ui/file-upload";
@@ -9,11 +8,9 @@ import { cn } from "@/lib/utils";
 
 export default function UploadPage() {
   const router = useRouter();
-  const { file, setFile, jobUrl, setJobUrl } = useUploadStore();
-  const [jobDescription, setJobDescription] = useState("");
-  const [showJD, setShowJD] = useState(false);
+  const { file, setFile, jdText, setJdText } = useUploadStore();
 
-  const canSubmit = file && (jobUrl.trim() || jobDescription.trim());
+  const canSubmit = !!(file && jdText.trim());
 
   const handleSubmit = () => {
     if (!canSubmit) return;
@@ -22,200 +19,139 @@ export default function UploadPage() {
 
   return (
     <main
-  style={{
-    minHeight: "100vh",
-    background: "var(--bg-primary)",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: "40px 24px",
-    position: "relative",
-  }}
->
-  {/* Dot background */}
-  <div
-  className={cn(
-    "absolute inset-0",
-    "[background-size:20px_20px]",
-    "[background-image:radial-gradient(#2a2a2a_1px,transparent_1px)]",
-  )}
-  style={{ zIndex: 0 }}
-/>
-  {/* Fade vignette */}
-  <div
-  className="pointer-events-none absolute inset-0 flex items-center justify-center bg-[var(--bg-primary)] [mask-image:radial-gradient(ellipse_at_center,transparent_30%,black)]"
-  style={{ zIndex: 1 }}
-/>
-        <div style={{ position: "relative", zIndex: 2, display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
-      {/* Logo */}
-      <motion.div
-        initial={{ opacity: 0, y: -16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-        style={{ marginBottom: "48px", cursor: "pointer" }}
-        onClick={() => router.push("/")}
-      >
-        <span
-          style={{
-            fontFamily: "var(--font-sans)",
-            fontWeight: 800,
-            fontSize: "20px",
-            color: "var(--text-cream)",
-            letterSpacing: "-0.03em",
-          }}
-        >
-          HirePrep <span style={{ color: "var(--accent-red)" }}>AI.</span>
-        </span>
-      </motion.div>
+      style={{
+        minHeight: "100vh",
+        background: "var(--bg-primary)",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "40px 24px",
+        position: "relative",
+      }}
+    >
+      {/* Dot background */}
+      <div
+        className={cn(
+          "absolute inset-0",
+          "[background-size:20px_20px]",
+          "[background-image:radial-gradient(#2a2a2a_1px,transparent_1px)]",
+        )}
+        style={{ zIndex: 0 }}
+      />
+      {/* Fade vignette */}
+      <div
+        className="pointer-events-none absolute inset-0 flex items-center justify-center bg-[var(--bg-primary)] [mask-image:radial-gradient(ellipse_at_center,transparent_30%,black)]"
+        style={{ zIndex: 1 }}
+      />
 
-      {/* Card */}
-      <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.1 }}
-        style={{
-          width: "100%",
-          maxWidth: "560px",
-          background: "var(--bg-secondary)",
-          borderRadius: "16px",
-          padding: "36px",
-          border: "1px solid var(--border)",
-        }}
-      >
-        {/* Card Header */}
-        <div style={{ marginBottom: "28px" }}>
-          <p
-            style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "11px",
-              letterSpacing: "0.15em",
-              color: "var(--accent-red)",
-              textTransform: "uppercase",
-              margin: "0 0 10px",
-            }}
-          >
-            Step 1 of 2
-          </p>
-          <h1
+      <div style={{ position: "relative", zIndex: 2, display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
+        {/* Logo */}
+        <motion.div
+          initial={{ opacity: 0, y: -16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          style={{ marginBottom: "48px", cursor: "pointer" }}
+          onClick={() => router.push("/")}
+        >
+          <span
             style={{
               fontFamily: "var(--font-sans)",
               fontWeight: 800,
-              fontSize: "28px",
+              fontSize: "20px",
               color: "var(--text-cream)",
-              letterSpacing: "-0.02em",
-              margin: "0 0 8px",
+              letterSpacing: "-0.03em",
             }}
           >
-            Upload your resume
-          </h1>
-          <p
-            style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "13px",
-              color: "var(--text-muted)",
-              margin: 0,
-            }}
-          >
-            We'll match it against the job and show your score — before you pay.
-          </p>
-        </div>
-
-        {/* Divider */}
-        <div style={{ height: "1px", background: "var(--border)", marginBottom: "28px" }} />
-
-        {/* File Upload */}
-        <div style={{ marginBottom: "8px" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
-            <span style={{ fontFamily: "var(--font-sans)", fontWeight: 700, fontSize: "14px", color: "var(--text-cream)" }}>
-              Resume
-            </span>
-            <span style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "var(--text-muted)" }}>
-              PDF or DOCX
-            </span>
-          </div>
-          <FileUpload
-            onChange={(files) => {
-              if (files[0]) setFile(files[0]);
-            }}
-          />
-        </div>
-
-        {/* LinkedIn hint */}
-        <p style={{ fontFamily: "var(--font-mono)", fontSize: "12px", color: "var(--text-muted)", margin: "10px 0 24px" }}>
-          No resume?{" "}
-          <span style={{ color: "var(--text-cream)", fontWeight: 700, textDecoration: "underline", cursor: "pointer" }}>
-            Save your LinkedIn profile
-          </span>{" "}
-          as a PDF and use that.
-        </p>
-
-        {/* Divider */}
-        <div style={{ height: "1px", background: "var(--border)", marginBottom: "24px" }} />
-
-        {/* Job URL */}
-        <div style={{ marginBottom: "12px" }}>
-          <span style={{ fontFamily: "var(--font-sans)", fontWeight: 700, fontSize: "14px", color: "var(--text-cream)", display: "block", marginBottom: "12px" }}>
-            Job posting
+            HirePrep <span style={{ color: "var(--accent-red)" }}>AI.</span>
           </span>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "10px",
-              background: "rgba(255,255,255,0.04)",
-              border: "1px solid var(--border)",
-              borderRadius: "8px",
-              padding: "0 16px",
-            }}
-          >
-            <span style={{ fontSize: "14px", opacity: 0.4, color: "var(--text-cream)" }}>⇨</span>
-            <input
-              type="url"
-              placeholder="Paste job posting URL"
-              value={jobUrl}
-              onChange={(e) => setJobUrl(e.target.value)}
-              style={{
-                flex: 1,
-                height: "46px",
-                background: "transparent",
-                border: "none",
-                fontFamily: "var(--font-mono)",
-                fontSize: "13px",
-                color: "var(--text-cream)",
-                outline: "none",
-              }}
-            />
-          </div>
-        </div>
+        </motion.div>
 
-        {/* Toggle JD */}
-        <p
-          onClick={() => setShowJD(!showJD)}
+        {/* Card */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
           style={{
-            fontFamily: "var(--font-mono)",
-            fontSize: "12px",
-            color: "var(--accent-red)",
-            cursor: "pointer",
-            textDecoration: "underline",
-            margin: "0 0 16px",
+            width: "100%",
+            maxWidth: "560px",
+            background: "var(--bg-secondary)",
+            borderRadius: "16px",
+            padding: "36px",
+            border: "1px solid var(--border)",
           }}
         >
-          {showJD ? "hide job description" : "or paste job description instead"}
-        </p>
+          {/* Card Header */}
+          <div style={{ marginBottom: "28px" }}>
+            <p
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: "11px",
+                letterSpacing: "0.15em",
+                color: "var(--accent-red)",
+                textTransform: "uppercase",
+                margin: "0 0 10px",
+              }}
+            >
+              Step 1 of 2
+            </p>
+            <h1
+              style={{
+                fontFamily: "var(--font-sans)",
+                fontWeight: 800,
+                fontSize: "28px",
+                color: "var(--text-cream)",
+                letterSpacing: "-0.02em",
+                margin: "0 0 8px",
+              }}
+            >
+              Upload your resume
+            </h1>
+            <p
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: "13px",
+                color: "var(--text-muted)",
+                margin: 0,
+              }}
+            >
+              We'll analyse your skills and generate a personalised learning roadmap.
+            </p>
+          </div>
 
-        {/* JD Textarea */}
-        {showJD && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            style={{ marginBottom: "16px" }}
-          >
+          {/* Divider */}
+          <div style={{ height: "1px", background: "var(--border)", marginBottom: "28px" }} />
+
+          {/* File Upload — PDF only */}
+          <div style={{ marginBottom: "24px" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
+              <span style={{ fontFamily: "var(--font-sans)", fontWeight: 700, fontSize: "14px", color: "var(--text-cream)" }}>
+                Resume
+              </span>
+              <span style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "var(--text-muted)" }}>
+                PDF only
+              </span>
+            </div>
+            <FileUpload
+              onChange={(files) => {
+                if (files[0]) setFile(files[0]);
+              }}
+              accept="application/pdf"
+            />
+          </div>
+
+          {/* Divider */}
+          <div style={{ height: "1px", background: "var(--border)", marginBottom: "24px" }} />
+
+          {/* Job Description textarea — always visible */}
+          <div style={{ marginBottom: "24px" }}>
+            <span style={{ fontFamily: "var(--font-sans)", fontWeight: 700, fontSize: "14px", color: "var(--text-cream)", display: "block", marginBottom: "12px" }}>
+              Job Description
+            </span>
             <textarea
               placeholder="Paste the full job description here..."
-              value={jobDescription}
-              onChange={(e) => setJobDescription(e.target.value)}
+              value={jdText}
+              onChange={(e) => setJdText(e.target.value)}
               rows={6}
               style={{
                 width: "100%",
@@ -231,67 +167,66 @@ export default function UploadPage() {
                 boxSizing: "border-box",
               }}
             />
-          </motion.div>
-        )}
+          </div>
 
-        {/* Divider */}
-        <div style={{ height: "1px", background: "var(--border)", margin: "8px 0 24px" }} />
+          {/* Divider */}
+          <div style={{ height: "1px", background: "var(--border)", margin: "0 0 24px" }} />
 
-        {/* Submit */}
-        <button
-          onClick={handleSubmit}
-          disabled={!canSubmit}
-          style={{
-            width: "100%",
-            padding: "14px",
-            background: canSubmit ? "var(--accent-red)" : "rgba(255,255,255,0.06)",
-            border: "none",
-            borderRadius: "8px",
-            color: canSubmit ? "var(--text-white)" : "var(--text-muted)",
-            fontFamily: "var(--font-sans)",
-            fontWeight: 700,
-            fontSize: "15px",
-            cursor: canSubmit ? "pointer" : "not-allowed",
-            transition: "all 0.2s",
-            letterSpacing: "-0.01em",
-          }}
-          onMouseEnter={(e) => {
-            if (canSubmit) e.currentTarget.style.background = "var(--accent-brown)";
-          }}
-          onMouseLeave={(e) => {
-            if (canSubmit) e.currentTarget.style.background = "var(--accent-red)";
-          }}
-        >
-          {file ? "Analyze my resume →" : "Upload a resume to continue"}
-        </button>
-
-        {/* Privacy note */}
-        <p style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "var(--text-muted)", textAlign: "center", margin: "16px 0 0" }}>
-          🔒 Private. Not stored. Not shared.
-        </p>
-      </motion.div>
-
-      {/* Step indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.4 }}
-        style={{ display: "flex", gap: "8px", marginTop: "32px" }}
-      >
-        {[0, 1, 2].map((i) => (
-          <div
-            key={i}
+          {/* Submit */}
+          <button
+            onClick={handleSubmit}
+            disabled={!canSubmit}
             style={{
-              width: i === 0 ? "24px" : "8px",
-              height: "8px",
-              borderRadius: "4px",
-              background: i === 0 ? "var(--accent-red)" : "rgba(255,255,255,0.15)",
-              transition: "all 0.3s",
+              width: "100%",
+              padding: "14px",
+              background: canSubmit ? "var(--accent-red)" : "rgba(255,255,255,0.06)",
+              border: "none",
+              borderRadius: "8px",
+              color: canSubmit ? "var(--text-white)" : "var(--text-muted)",
+              fontFamily: "var(--font-sans)",
+              fontWeight: 700,
+              fontSize: "15px",
+              cursor: canSubmit ? "pointer" : "not-allowed",
+              transition: "all 0.2s",
+              letterSpacing: "-0.01em",
             }}
-          />
-        ))}
-      </motion.div>
-    </div>
+            onMouseEnter={(e) => {
+              if (canSubmit) e.currentTarget.style.background = "var(--accent-brown)";
+            }}
+            onMouseLeave={(e) => {
+              if (canSubmit) e.currentTarget.style.background = "var(--accent-red)";
+            }}
+          >
+            {file ? "Analyse my resume →" : "Upload a resume to continue"}
+          </button>
+
+          {/* Privacy note */}
+          <p style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "var(--text-muted)", textAlign: "center", margin: "16px 0 0" }}>
+            🔒 Private. Not stored. Not shared.
+          </p>
+        </motion.div>
+
+        {/* Step indicator */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4 }}
+          style={{ display: "flex", gap: "8px", marginTop: "32px" }}
+        >
+          {[0, 1, 2].map((i) => (
+            <div
+              key={i}
+              style={{
+                width: i === 0 ? "24px" : "8px",
+                height: "8px",
+                borderRadius: "4px",
+                background: i === 0 ? "var(--accent-red)" : "rgba(255,255,255,0.15)",
+                transition: "all 0.3s",
+              }}
+            />
+          ))}
+        </motion.div>
+      </div>
     </main>
   );
 }

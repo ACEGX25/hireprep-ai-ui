@@ -75,7 +75,7 @@ useEffect(() => {
               marginBottom: "20px",
             }}
           >
-            GET STARTED FREE
+            ANALYSE YOUR RESUME
           </motion.p>
 
           <motion.h2
@@ -111,9 +111,9 @@ useEffect(() => {
               margin: "0 0 40px",
             }}
           >
-            We rebuild it to pass ATS and get responses.
+            Upload your PDF resume and paste a job description.
             <br />
-            See your match score before you pay.
+            Get your ATS score and a week-by-week learning roadmap.
           </motion.p>
 
           <motion.div
@@ -124,7 +124,7 @@ useEffect(() => {
             style={{ display: "flex", gap: "16px", alignItems: "center" }}
           >
             <button
-              onClick={() => {}}
+              onClick={() => { if (typeof window !== 'undefined') window.location.href = '/upload'; }}
               style={{
                 background: "var(--accent-red)",
                 color: "var(--text-white)",
@@ -138,18 +138,9 @@ useEffect(() => {
                 letterSpacing: "-0.01em",
               }}
             >
-              Rebuild my Resume
+              Analyse my Resume →
             </button>
 
-            <span
-              style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: "12px",
-                color: "var(--text-muted)",
-              }}
-            >
-              No credit card required
-            </span>
           </motion.div>
         </div>
 
