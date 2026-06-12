@@ -18,7 +18,7 @@ const stackCards = [
 
 export default function Hero() {
   const [fileName, setFileName] = useState<string | null>(null);
-  const { setFile, setJobUrl, jobUrl } = useUploadStore();
+  const { setFile } = useUploadStore();
   const router = useRouter();
 
   const handleSubmit = () => {
@@ -142,7 +142,7 @@ export default function Hero() {
                   letterSpacing: "0.05em",
                 }}
               >
-                PDF or DOCX
+                PDF only
               </span>
             </div>
 
@@ -158,98 +158,7 @@ export default function Hero() {
               />
             </div>
 
-            {/* LinkedIn hint */}
-            <p
-              style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: "12px",
-                color: "rgba(245,240,232,0.55)",
-                marginBottom: "16px",
-              }}
-            >
-              No resume?{" "}
-              <span
-                style={{
-                  color: "var(--text-cream)",
-                  fontWeight: 700,
-                  textDecoration: "underline",
-                  cursor: "pointer",
-                }}
-              >
-                Save your LinkedIn profile
-              </span>{" "}
-              as a PDF and use that.
-            </p>
 
-            {/* OR divider */}
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "12px",
-                marginBottom: "16px",
-              }}
-            >
-              <div style={{ flex: 1, height: "1px", background: "rgba(26,10,4,0.15)" }} />
-              <span
-                style={{
-                  fontFamily: "var(--font-mono)",
-                  fontSize: "11px",
-                  color: "rgba(26,10,4,0.4)",
-                  letterSpacing: "0.1em",
-                }}
-              >
-                OR
-              </span>
-              <div style={{ flex: 1, height: "1px", background: "rgba(26,10,4,0.15)" }} />
-            </div>
-
-            {/* Job URL input */}
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "10px",
-                background: "rgba(255,255,255,0.5)",
-                border: "1px solid rgba(26,10,4,0.15)",
-                borderRadius: "8px",
-                padding: "0 16px",
-                marginBottom: "10px",
-              }}
-            >
-              <span style={{ fontSize: "14px", opacity: 0.4 }}>⇨</span>
-              <input
-                type="url"
-                placeholder="Paste job posting URL"
-                value={jobUrl}
-                onChange={(e) => setJobUrl(e.target.value)}
-                style={{
-                  flex: 1,
-                  height: "46px",
-                  background: "transparent",
-                  border: "none",
-                  fontFamily: "var(--font-mono)",
-                  fontSize: "13px",
-                  color: "#1a0a04",
-                  outline: "none",
-                }}
-              />
-            </div>
-
-            {/* Paste JD link */}
-            <p
-              style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: "12px",
-                color: "var(--text-cream)",
-                fontWeight: 700,
-                textDecoration: "underline",
-                cursor: "pointer",
-                marginBottom: "20px",
-              }}
-            >
-              or paste job description
-            </p>
 
             {/* CTA Button */}
             <button
@@ -275,7 +184,7 @@ export default function Hero() {
                 e.currentTarget.style.background = "rgba(0,0,0,0.75)";
               }}
             >
-              See your match before you pay
+              Analyse my resume →
             </button>
           </div>
         </div>
