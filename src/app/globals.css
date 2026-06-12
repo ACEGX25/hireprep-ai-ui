@@ -71,12 +71,3 @@ body {
 .in-view .animate-spotlight {
   animation: spotlight 2s ease 0.3s forwards;
 }
-
-* {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-*::-webkit-scrollbar {
-  display: none;
-}

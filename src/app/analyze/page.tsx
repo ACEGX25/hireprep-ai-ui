@@ -19,7 +19,7 @@ const STEPS = [
   },
   {
     label: "STEP 03 – MATCHING",
-    description: "Comparing against the job.\nScoring relevance, gaps and keyword alignment.",
+    description: "Comparing against the role.\nScoring relevance, gaps and keyword alignment.",
   },
   {
     label: "STEP 04 – ATS SCORE",
@@ -58,7 +58,7 @@ function easeInOut(t: number) {
 
 export default function AnalyzePage() {
   const router = useRouter();
-  const { file, jdText } = useUploadStore();
+  const { file, inputMode, jobTitle, jdText } = useUploadStore();
   const setResult = useResultStore((s) => s.setResult);
 
   // currentStep: 0 = waiting, 1-5 = step completed, 6 = done
@@ -115,7 +115,9 @@ export default function AnalyzePage() {
 
   // ── Fire the real API call on mount ──────────────────────────────────────
   useEffect(() => {
-    if (!file || !jdText) {
+    // Guard: must have a file and at least one job input
+    const hasJobInput = inputMode === "title" ? !!jobTitle.trim() : !!jdText.trim();
+    if (!file || !hasJobInput) {
       router.replace("/upload");
       return;
     }
@@ -124,7 +126,12 @@ export default function AnalyzePage() {
 
     const formData = new FormData();
     formData.append("resume_pdf", file);
-    formData.append("jd_text", jdText);
+    // Send the correct field depending on input mode
+    if (inputMode === "title") {
+      formData.append("job_title", jobTitle);
+    } else {
+      formData.append("jd_text", jdText);
+    }
     formData.append("stream", "true");
 
     let isMounted = true;
