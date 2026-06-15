@@ -1,17 +1,27 @@
 import { create } from "zustand";
 
+export type InputMode = "title" | "jd";
+
 interface UploadStore {
   file: File | null;
-  jobUrl: string;
+  inputMode: InputMode;
+  jobTitle: string;
+  jdText: string;
   setFile: (file: File) => void;
-  setJobUrl: (url: string) => void;
+  setInputMode: (mode: InputMode) => void;
+  setJobTitle: (title: string) => void;
+  setJdText: (text: string) => void;
   reset: () => void;
 }
 
 export const useUploadStore = create<UploadStore>((set) => ({
   file: null,
-  jobUrl: "",
+  inputMode: "jd",       // default: paste JD
+  jobTitle: "",
+  jdText: "",
   setFile: (file) => set({ file }),
-  setJobUrl: (url) => set({ jobUrl: url }),
-  reset: () => set({ file: null, jobUrl: "" }),
+  setInputMode: (mode) => set({ inputMode: mode }),
+  setJobTitle: (title) => set({ jobTitle: title }),
+  setJdText: (text) => set({ jdText: text }),
+  reset: () => set({ file: null, inputMode: "jd", jobTitle: "", jdText: "" }),
 }));
