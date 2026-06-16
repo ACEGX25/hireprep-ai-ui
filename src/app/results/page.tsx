@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 import { useResultStore, type AnalysisResult, type RoadmapWeek } from "@/store/resultStore";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 
 // ── Score Arc ──────────────────────────────────────────────────────────────
 function ScoreArc({ score }: { score: number }) {
@@ -189,14 +190,7 @@ export default function ResultsPage() {
 
   return (
     <main style={{ minHeight: "100vh", background: "var(--bg-primary)", padding: "0" }}>
-      <div
-        className={cn(
-          "absolute inset-0",
-          "[background-size:20px_20px]",
-          "[background-image:radial-gradient(#2a2a2a_1px,transparent_1px)]",
-        )}
-        style={{ zIndex: 0 }}
-      />
+      <div style={{ position: "absolute", inset: 0, zIndex: 0, backgroundSize: "20px 20px", backgroundImage: "radial-gradient(var(--dot-color) 1px, transparent 1px)" }} />
       <div
         className="pointer-events-none absolute inset-0 bg-[var(--bg-primary)] [mask-image:radial-gradient(ellipse_at_center,transparent_40%,black)]"
         style={{ zIndex: 1 }}
@@ -224,7 +218,8 @@ export default function ResultsPage() {
           >
             HirePrep <span style={{ color: "var(--accent-red)" }}>AI.</span>
           </span>
-          <div style={{ display: "flex", gap: "12px" }}>
+          <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
+            <ThemeToggle size={34} />
             <button
               onClick={() => router.push("/upload")}
               style={{

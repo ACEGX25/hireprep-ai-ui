@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { FileUpload } from "@/components/ui/file-upload";
 import { useUploadStore, type InputMode } from "@/store/uploadStore";
 import { cn } from "@/lib/utils";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 
 const TABS: { id: InputMode; label: string; icon: string }[] = [
   { id: "title", label: "Job Title", icon: "✦" },
@@ -46,12 +47,11 @@ export default function UploadPage() {
     >
       {/* Dot background */}
       <div
-        className={cn(
-          "absolute inset-0",
-          "[background-size:20px_20px]",
-          "[background-image:radial-gradient(#2a2a2a_1px,transparent_1px)]",
-        )}
-        style={{ zIndex: 0 }}
+        style={{
+          position: "absolute", inset: 0, zIndex: 0,
+          backgroundSize: "20px 20px",
+          backgroundImage: "radial-gradient(var(--dot-color) 1px, transparent 1px)",
+        }}
       />
       {/* Fade vignette */}
       <div
@@ -60,6 +60,11 @@ export default function UploadPage() {
       />
 
       <div style={{ position: "relative", zIndex: 2, display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
+        {/* Top-right theme toggle */}
+        <div style={{ position: "absolute", top: "20px", right: "20px", zIndex: 10 }}>
+          <ThemeToggle size={34} />
+        </div>
+
         {/* Logo */}
         <motion.div
           initial={{ opacity: 0, y: -16 }}
