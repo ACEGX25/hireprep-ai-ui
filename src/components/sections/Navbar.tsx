@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import ThemeToggle from "@/components/ui/ThemeToggle";
+import AuthButton from "@/components/ui/AuthButton";
 
 export default function Navbar() {
   const router = useRouter();
@@ -120,6 +121,40 @@ export default function Navbar() {
 
         {/* Theme Toggle */}
         <ThemeToggle size={34} />
+
+        {/* Auth Button */}
+        <AuthButton scrolled={scrolled} />
+
+        {/* History Link */}
+        <button
+          onClick={() => router.push("/history")}
+          style={{
+            fontFamily: "var(--font-mono)",
+            fontWeight: 700,
+            fontSize: "14px",
+            padding: "6px 14px",
+            background: "transparent",
+            border: `1px solid ${scrolled ? "rgba(255,255,255,0.15)" : "rgba(26,16,8,0.2)"}`,
+            color: scrolled ? "var(--text-muted)" : "#5a4030",
+            cursor: "pointer",
+            borderRadius: "6px",
+            transition: "all 0.2s",
+            letterSpacing: "0.02em",
+            display: "flex",
+            alignItems: "center",
+            gap: "6px",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = "rgba(255,255,255,0.07)";
+            e.currentTarget.style.color = "var(--text-cream)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = "transparent";
+            e.currentTarget.style.color = scrolled ? "var(--text-muted)" : "#5a4030";
+          }}
+        >
+          📋 History
+        </button>
 
         {/* CTA Button */}
         <button

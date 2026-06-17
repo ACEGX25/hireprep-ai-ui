@@ -6,6 +6,7 @@ import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 import { useUploadStore } from "@/store/uploadStore";
 import { useResultStore } from "@/store/resultStore";
+import { useAuthStore } from "@/store/authStore";
 
 // ── Step definitions (must match backend PIPELINE_STEPS order) ─────────────
 const STEPS = [
@@ -60,6 +61,7 @@ export default function AnalyzePage() {
   const router = useRouter();
   const { file, inputMode, jobTitle, jdText } = useUploadStore();
   const setResult = useResultStore((s) => s.setResult);
+  const { user } = useAuthStore();
 
   // currentStep: 0 = waiting, 1-5 = step completed, 6 = done
   const [currentStep, setCurrentStep] = useState(0);
@@ -133,6 +135,8 @@ export default function AnalyzePage() {
       formData.append("jd_text", jdText);
     }
     formData.append("stream", "true");
+    // Append user_id for history saving (empty string = guest, backend ignores it)
+    formData.append("user_id", user?.id ?? "");
 
     let isMounted = true;
 

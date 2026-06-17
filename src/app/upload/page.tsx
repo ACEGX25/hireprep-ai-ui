@@ -6,6 +6,8 @@ import { FileUpload } from "@/components/ui/file-upload";
 import { useUploadStore, type InputMode } from "@/store/uploadStore";
 import { cn } from "@/lib/utils";
 import ThemeToggle from "@/components/ui/ThemeToggle";
+import { useAuthStore } from "@/store/authStore";
+import AuthButton from "@/components/ui/AuthButton";
 
 const TABS: { id: InputMode; label: string; icon: string }[] = [
   { id: "title", label: "Job Title", icon: "✦" },
@@ -14,6 +16,7 @@ const TABS: { id: InputMode; label: string; icon: string }[] = [
 
 export default function UploadPage() {
   const router = useRouter();
+  const { user } = useAuthStore();
   const {
     file, setFile,
     inputMode, setInputMode,
@@ -60,8 +63,9 @@ export default function UploadPage() {
       />
 
       <div style={{ position: "relative", zIndex: 2, display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
-        {/* Top-right theme toggle */}
-        <div style={{ position: "absolute", top: "20px", right: "20px", zIndex: 10 }}>
+        {/* Top-right controls */}
+        <div style={{ position: "absolute", top: "20px", right: "20px", zIndex: 10, display: "flex", gap: "10px", alignItems: "center" }}>
+          <AuthButton />
           <ThemeToggle size={34} />
         </div>
 
@@ -128,6 +132,35 @@ export default function UploadPage() {
             }}>
               Analyse your skills and get a personalised learning roadmap.
             </p>
+
+            {/* Auth history badge */}
+            <div style={{ marginTop: "14px" }}>
+              {user ? (
+                <div style={{
+                  display: "inline-flex", alignItems: "center", gap: "6px",
+                  padding: "6px 12px", borderRadius: "6px",
+                  background: "rgba(46,204,113,0.08)", border: "1px solid rgba(46,204,113,0.2)",
+                  fontFamily: "var(--font-mono)", fontSize: "11px", color: "#2ecc71",
+                }}>
+                  💾 Signed in — analysis will be saved to your history
+                </div>
+              ) : (
+                <button
+                  onClick={() => useAuthStore.getState().signInWithGoogle()}
+                  style={{
+                    display: "inline-flex", alignItems: "center", gap: "6px",
+                    padding: "6px 12px", borderRadius: "6px",
+                    background: "rgba(255,255,255,0.04)", border: "1px solid var(--border)",
+                    fontFamily: "var(--font-mono)", fontSize: "11px", color: "var(--text-muted)",
+                    cursor: "pointer", transition: "all 0.2s",
+                  }}
+                  onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.08)"; e.currentTarget.style.color = "var(--text-cream)"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.04)"; e.currentTarget.style.color = "var(--text-muted)"; }}
+                >
+                  🔒 Sign in with Google to save history (optional)
+                </button>
+              )}
+            </div>
           </div>
 
           {/* Divider */}

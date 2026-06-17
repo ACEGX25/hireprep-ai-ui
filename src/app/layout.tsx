@@ -3,6 +3,7 @@ import { Outfit, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import SmoothScroller from "@/components/providers/SmoothScroller";
 import ThemeInitializer from "@/components/providers/ThemeInitializer";
+import AuthProvider from "@/components/providers/AuthProvider";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -26,15 +27,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         {/* ThemeInitializer must run before body renders to prevent FOUC */}
         <ThemeInitializer />
       </head>
       <body className={`${outfit.variable} ${ibmPlexMono.variable}`}>
-        <SmoothScroller>
-          {children}
-        </SmoothScroller>
+        <AuthProvider>
+          <SmoothScroller>
+            {children}
+          </SmoothScroller>
+        </AuthProvider>
       </body>
     </html>
   );
