@@ -29,15 +29,18 @@ const secondaryVariant = {
 export const FileUpload = ({
   onChange,
   accept,
+  value,
 }: {
   onChange?: (files: File[]) => void;
   accept?: string;
+  value?: File | null;
 }) => {
-  const [files, setFiles] = useState<File[]>([]);
+  const [internalFiles, setInternalFiles] = useState<File[]>([]);
+  const files = value !== undefined ? (value ? [value] : []) : internalFiles;
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (newFiles: File[]) => {
-    setFiles((prevFiles) => [...prevFiles, ...newFiles]);
+    setInternalFiles((prevFiles) => [...prevFiles, ...newFiles]);
     onChange && onChange(newFiles);
   };
 
@@ -84,8 +87,8 @@ export const FileUpload = ({
       <motion.div
         key={"file" + idx}
         layoutId={idx === 0 ? "file-upload" : "file-upload-" + idx}
-        className="relative z-40 mx-auto mt-4 flex w-full flex-col items-start justify-start overflow-hidden rounded-md p-4 md:h-24 shadow-sm"
-        style={{ background: "rgba(255,255,255,0.06)", border: "1px solid var(--border)" }}
+        className="relative z-40 mx-auto mt-4 flex w-full items-center justify-between overflow-hidden rounded-md p-4 shadow-sm"
+        style={{ background: "rgba(255,255,255,0.06)", border: "1px solid var(--border)", height: "72px" }}
       >
         <div className="flex w-full items-center justify-between gap-4">
           <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} layout

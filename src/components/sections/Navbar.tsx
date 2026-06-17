@@ -16,6 +16,21 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const navLinkStyle: React.CSSProperties = {
+    fontFamily: "var(--font-sans)",
+    fontWeight: 500,
+    fontSize: "14px",
+    color: "var(--text-cream)",
+    textDecoration: "none",
+    opacity: 0.75,
+    letterSpacing: "0.01em",
+    background: "none",
+    border: "none",
+    cursor: "pointer",
+    padding: "4px 0",
+    transition: "opacity 0.2s",
+  };
+
   return (
     <nav
       style={{
@@ -25,159 +40,85 @@ export default function Navbar() {
         right: 0,
         zIndex: 100,
         padding: "0 48px",
-        height: "56px",
+        height: "60px",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        transition: "background 0.3s ease, backdrop-filter 0.3s ease",
-        background: scrolled ? "rgba(10,10,10,0.85)" : "transparent",
-        backdropFilter: scrolled ? "blur(12px)" : "none",
-        borderBottom: scrolled ? "1px solid var(--border)" : "none",
+        transition: "background 0.3s ease, backdrop-filter 0.3s ease, border-color 0.3s ease",
+        background: scrolled ? "var(--nav-bg)" : "transparent",
+        backdropFilter: scrolled ? "blur(14px)" : "none",
+        borderBottom: scrolled ? "1px solid var(--border)" : "1px solid transparent",
       }}
     >
-      {/* Logo */}
+      {/* ── Logo ── */}
       <Link
         href="/"
         style={{
-          fontFamily: "var(--font-mono)",
+          fontFamily: "var(--font-sans)",
           fontWeight: 700,
-          fontSize: "20px",
-          color: scrolled ? "var(--text-cream)" : "#1a1008",
+          fontSize: "18px",
+          color: "var(--text-cream)",
           textDecoration: "none",
           letterSpacing: "-0.02em",
+          flexShrink: 0,
         }}
       >
         HirePrep AI.
       </Link>
 
-      {/* Nav Links */}
-      <div style={{ display: "flex", alignItems: "center", gap: "40px" }}>
-        {/* How it Works page link */}
-        <button
-          onClick={() => router.push("/how-it-works")}
-          style={{
-            fontFamily: "var(--font-mono)",
-            fontWeight: 700,
-            fontSize: "15px",
-            background: "transparent",
-            border: "none",
-            color: scrolled ? "var(--text-cream)" : "#1a1008",
-            cursor: "pointer",
-            transition: "opacity 0.2s",
-            padding: 0,
-          }}
-          onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.6")}
-          onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
-        >
-          How it works
-        </button>
+      {/* ── Right Actions ── */}
+      <div style={{ display: "flex", alignItems: "center", gap: "10px", flexShrink: 0 }}>
+        {/* Nav Links */}
+        <div style={{ display: "flex", alignItems: "center", gap: "24px", marginRight: "12px" }}>
+          <button
+            onClick={() => router.push("/how-it-works")}
+            style={navLinkStyle}
+            onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
+            onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.75")}
+          >
+            How it works
+          </button>
 
-        {/* FAQ anchor */}
-        <Link
-          href="#faq"
-          style={{
-            fontFamily: "var(--font-mono)",
-            fontWeight: 700,
-            fontSize: "15px",
-            color: scrolled ? "var(--text-cream)" : "#1a1008",
-            textDecoration: "none",
-            transition: "opacity 0.2s",
-          }}
-          onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.6")}
-          onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
-        >
-          FAQ
-        </Link>
-
-        {/* Performance Link */}
-        <button
-          onClick={() => router.push("/performance")}
-          style={{
-            fontFamily: "var(--font-mono)",
-            fontWeight: 700,
-            fontSize: "14px",
-            padding: "6px 16px",
-            background: "transparent",
-            border: `1px solid ${scrolled ? "rgba(201,74,58,0.5)" : "rgba(26,16,8,0.3)"}`,
-            color: scrolled ? "var(--accent-red)" : "#7a2e18",
-            cursor: "pointer",
-            borderRadius: "6px",
-            transition: "all 0.2s",
-            letterSpacing: "0.02em",
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.background = "var(--accent-red)";
-            e.currentTarget.style.color = "#fff";
-            e.currentTarget.style.borderColor = "var(--accent-red)";
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.background = "transparent";
-            e.currentTarget.style.color = scrolled ? "var(--accent-red)" : "#7a2e18";
-            e.currentTarget.style.borderColor = scrolled ? "rgba(201,74,58,0.5)" : "rgba(26,16,8,0.3)";
-          }}
-        >
-          ⚡ Performance
-        </button>
+          <button
+            onClick={() => router.push("/performance")}
+            style={navLinkStyle}
+            onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
+            onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.75")}
+          >
+            Performance
+          </button>
+        </div>
 
         {/* Theme Toggle */}
         <ThemeToggle size={34} />
 
-        {/* Auth Button */}
+        {/* Auth (Sign in / User avatar dropdown) */}
         <AuthButton scrolled={scrolled} />
 
-        {/* History Link */}
+        {/* CTA */}
         <button
-          onClick={() => router.push("/history")}
+          onClick={() => router.push("/analyze")}
           style={{
-            fontFamily: "var(--font-mono)",
+            fontFamily: "var(--font-sans)",
             fontWeight: 700,
-            fontSize: "14px",
-            padding: "6px 14px",
-            background: "transparent",
-            border: `1px solid ${scrolled ? "rgba(255,255,255,0.15)" : "rgba(26,16,8,0.2)"}`,
-            color: scrolled ? "var(--text-muted)" : "#5a4030",
+            fontSize: "13px",
+            padding: "8px 20px",
+            background: "var(--accent-red)",
+            border: "2px solid var(--accent-red)",
+            color: "#fff",
             cursor: "pointer",
-            borderRadius: "6px",
-            transition: "all 0.2s",
+            borderRadius: "8px",
             letterSpacing: "0.02em",
-            display: "flex",
-            alignItems: "center",
-            gap: "6px",
+            transition: "opacity 0.2s, transform 0.15s",
+            whiteSpace: "nowrap",
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.background = "rgba(255,255,255,0.07)";
-            e.currentTarget.style.color = "var(--text-cream)";
+            e.currentTarget.style.opacity = "0.85";
+            e.currentTarget.style.transform = "translateY(-1px)";
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.background = "transparent";
-            e.currentTarget.style.color = scrolled ? "var(--text-muted)" : "#5a4030";
-          }}
-        >
-          📋 History
-        </button>
-
-        {/* CTA Button */}
-        <button
-          style={{
-            fontFamily: "var(--font-mono)",
-            fontWeight: 700,
-            fontSize: "14px",
-            padding: "8px 24px",
-            background: "transparent",
-            border: `2px solid ${scrolled ? "var(--text-cream)" : "#1a1008"}`,
-            color: scrolled ? "var(--text-cream)" : "#1a1008",
-            cursor: "pointer",
-            borderRadius: "2px",
-            transition: "all 0.2s",
-            letterSpacing: "0.02em",
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.background = scrolled ? "var(--text-cream)" : "#1a1008";
-            e.currentTarget.style.color = scrolled ? "#0a0a0a" : "var(--accent-red)";
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.background = "transparent";
-            e.currentTarget.style.color = scrolled ? "var(--text-cream)" : "#1a1008";
+            e.currentTarget.style.opacity = "1";
+            e.currentTarget.style.transform = "translateY(0)";
           }}
         >
           Get Started

@@ -17,8 +17,7 @@ const stackCards = [
 ];
 
 export default function Hero() {
-  const [fileName, setFileName] = useState<string | null>(null);
-  const { setFile } = useUploadStore();
+  const { file, setFile } = useUploadStore();
   const router = useRouter();
 
   const handleSubmit = () => {
@@ -149,10 +148,10 @@ export default function Hero() {
             {/* Drop Zone */}
             <div style={{ marginBottom: "14px" }}>
               <FileUpload
+                value={file}
                 onChange={(files) => {
                   if (files[0]) {
                     setFile(files[0]);
-                    setFileName(files[0].name);
                   }
                 }}
               />
@@ -166,22 +165,24 @@ export default function Hero() {
               style={{
                 width: "100%",
                 padding: "14px",
-                background: "rgba(0,0,0,0.75)",
+                background: "var(--text-cream)",
                 border: "none",
                 borderRadius: "8px",
-                color: "var(--text-cream)",
-                fontFamily: "var(--font-mono)",
+                color: "var(--bg-primary)",
+                fontFamily: "var(--font-sans)",
                 fontWeight: 700,
-                fontSize: "14px",
+                fontSize: "15px",
                 cursor: "pointer",
                 transition: "all 0.2s",
                 letterSpacing: "0.02em",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = "#1a0a04";
+                e.currentTarget.style.opacity = "0.85";
+                e.currentTarget.style.transform = "translateY(-1px)";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = "rgba(0,0,0,0.75)";
+                e.currentTarget.style.opacity = "1";
+                e.currentTarget.style.transform = "translateY(0)";
               }}
             >
               Analyse my resume →

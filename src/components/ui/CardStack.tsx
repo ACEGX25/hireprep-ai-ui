@@ -14,7 +14,6 @@ interface CardStackProps {
 export default function CardStack({ cards }: CardStackProps) {
   const sliderRef = useRef<HTMLDivElement>(null);
   const isAnimating = useRef(false);
-  const rootsRef = useRef<Map<HTMLElement, ReactDOM.Root>>(new Map());
 
   const offsets = [
     { left: 0, top: 0 },
@@ -43,7 +42,9 @@ export default function CardStack({ cards }: CardStackProps) {
 
     // Clear existing
     slider.innerHTML = "";
-    rootsRef.current.clear();
+    
+    // We store the roots created in this specific effect execution
+    const localRoots: ReactDOM.Root[] = [];
 
     // Build cards from bottom to top (last card = bottom)
     const reversed = [...cards].reverse();
@@ -61,7 +62,7 @@ export default function CardStack({ cards }: CardStackProps) {
       slider.appendChild(div);
       const root = ReactDOM.createRoot(div);
       root.render(card as React.ReactElement);
-      rootsRef.current.set(div, root);
+      localRoots.push(root);
     });
 
     // Apply initial offsets
@@ -71,10 +72,8 @@ export default function CardStack({ cards }: CardStackProps) {
     applyOffsets(items);
 
     return () => {
-      const roots = rootsRef.current;
       setTimeout(() => {
-        roots.forEach((root) => root.unmount());
-        roots.clear();
+        localRoots.forEach((root) => root.unmount());
       }, 0);
     };
   }, []);

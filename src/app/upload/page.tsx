@@ -177,6 +177,7 @@ export default function UploadPage() {
               </span>
             </div>
             <FileUpload
+              value={file}
               onChange={(files) => { if (files[0]) setFile(files[0]); }}
               accept="application/pdf"
             />

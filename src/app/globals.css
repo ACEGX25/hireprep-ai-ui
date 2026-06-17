@@ -30,6 +30,7 @@
   /* Functional */
   --border:       rgba(255, 255, 255, 0.08);
   --border-hover: rgba(255, 255, 255, 0.15);
+  --nav-bg:       rgba(10, 10, 10, 0.85);
 
   /* Dot grid */
   --dot-color: #2a2a2a;
@@ -64,6 +65,7 @@
   /* Functional */
   --border:       rgba(0, 0, 0, 0.10);
   --border-hover: rgba(0, 0, 0, 0.20);
+  --nav-bg:       rgba(250, 247, 242, 0.88);
 
   /* Dot grid */
   --dot-color: #d4c4b4;
